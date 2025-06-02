@@ -878,7 +878,7 @@ func tampilkanDonasiTerkecil(D dataDonatur, jumlahDonatur int) {
 	fmt.Println("╠════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣")
 	
 	// Format statistik dengan padding manual untuk 91 karakter
-	totalText := fmt.Sprintf("Total donatur dengan donasi terbesar: %d orang", jumlahData)
+	totalText := fmt.Sprintf("Total donatur dengan donasi terkecil: %d orang", jumlahData)
 	totalSpaces := 160 - len(totalText)
 	fmt.Printf("║ %s", totalText)
 	for i := 0; i < totalSpaces-1; i++ {
