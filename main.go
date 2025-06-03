@@ -372,10 +372,20 @@ func hapusDonatur(D *dataDonatur, jumlahDonatur *int) {
 		fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗")
 		fmt.Println("║                                                                       DONATUR DITEMUKAN                                                                        ║")
 		fmt.Println("╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
-		fmt.Printf("ID: %d | Nama: %s | Kota: %s | Jumlah: Rp%.0f | Status: %s | Tujuan: %s\n", 
-			D[indeks].id, D[indeks].nama, D[indeks].kotaAsal, D[indeks].jumlah, 
-			statusDonasi(D[indeks].sudahDonasi), D[indeks].tujuanDonasi)
-
+		fmt.Println("╔════════╦═══════════════════════════════════════════╦═════════════════════════════════════╦══════════════════════════╦═══════════════╦══════════════════════╗")
+		fmt.Printf("║ %-6s ║ %-41s ║ %-35s ║ %-24s ║ %-13s ║ %-20s ║\n", "ID", "NAMA", "KOTA", "JUMLAH", "STATUS", "TUJUAN")
+		fmt.Println("╠════════╬═══════════════════════════════════════════╬═════════════════════════════════════╬══════════════════════════╬═══════════════╬══════════════════════╣")
+		
+		// format data
+		nama := truncateString(D[indeks].nama, 41)
+		kota := truncateString(D[indeks].kotaAsal, 35)
+		tujuan := truncateString(D[indeks].tujuanDonasi, 20)
+		jumlahStr := formatRupiah(D[indeks].jumlah)
+		status := statusDonasi(D[indeks].sudahDonasi)
+		
+		fmt.Printf("║ %-6d ║ %-41s ║ %-35s ║ %24s ║ %-13s ║ %-20s ║\n", D[indeks].id, nama, kota, jumlahStr, status, tujuan)
+		fmt.Println("╚════════╩═══════════════════════════════════════════╩═════════════════════════════════════╩══════════════════════════╩═══════════════╩══════════════════════╝")
+		
 		fmt.Print("Apakah Anda yakin ingin menghapus data ini? (y/n): ")
 		fmt.Scanln(&konfirmasi)
 
@@ -1075,22 +1085,22 @@ func infoDonasi(D dataDonatur, jumlahDonatur int) {
 
 // procedure untuk membersihkan tampilan console terminal
 func clear() {
-	cmd := exec.Command("cmd", "/c", "cls") 
-	cmd.Stdout = os.Stdout 
-	cmd.Run() 
+	cmd := exec.Command("cmd", "/c", "cls")      // Membuat perintah 'cls' dijalankan lewat command prompt
+	cmd.Stdout = os.Stdout                       // Mengatur output perintah ke terminal aktif
+	cmd.Run()                                     // Menjalankan perintah
 }
 
 // procedure untuk menjeda program sampai pengguna menekan tombol enter
 func pauseProgram() {
 	fmt.Println("Tekan ENTER untuk melanjutkan.")
-	bufio.NewReader(os.Stdin).ReadBytes('\n')
+	bufio.NewReader(os.Stdin).ReadBytes('\n') // Menunggu input ENTER dari pengguna
 }
 
 // fungsi untuk user agar bisa menggunakan spasi saat pengimputan
 func scanLineInput(prompt string) string {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print(prompt)
-	input, _ := reader.ReadString('\n')
+	input, _ := reader.ReadString('\n') // Membaca input hingga karakter newline ditemukan
 	return strings.TrimSpace(input)
 }
 
